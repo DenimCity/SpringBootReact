@@ -25,7 +25,7 @@ class LandingPage extends Component {
           </Container>
           <button onClick={this.onOpenModal}>Welcome </button>
           <Modal open={open} onClose={this.onCloseModal} little>
-          <Title>Welcome the Home Depot</Title>
+          <Title>Welcome To Doors Warehouse</Title>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam
             pulvinar risus non risus hendrerit venenatis. Pellentesque sit amet

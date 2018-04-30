@@ -10,10 +10,10 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
 @SpringBootApplication
-public class DemoApplication {
+public class DoorApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(DemoApplication.class, args);
+		SpringApplication.run(DoorApplication.class, args);
 	}
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {

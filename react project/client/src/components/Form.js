@@ -1,37 +1,46 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import styled from 'styled-components'
+import axios from 'axios'
 
 
 class Form extends Component {
 
     state = {
+        doors:[],
         newDoor:{
-            doorName:'',
-            doorColor:''
+            "id":'',
+            "name":''
         },
-        redirecet:false
+        redirect:false
     }
+    
+    createDoor = async () => {
+    const response = await axios.post('http://localhost:8080/doors/new', this.state.newDoor)
+    const newDoor =  await response.data 
+    const doors = [...this.state.doors]
+    doors.push(newDoor)
+    this.setState({doors})
+        }
 
     handleChange = (e) => {
-        const attribute = e.target.name
-        const value = e.target.value
-        const newDoor = {...this.state.newDoor}
-        newDoor[attribute] = value
-        this.setState({newDoor})
+    const attribute = e.target.name
+    const value =  e.target.value
+    const newDoor = {...this.state.newDoor}
+    newDoor[attribute] = value
+    this.setState({newDoor})
       }
 
-      handleSubmit = (e) => {
-          const {newDoor} = this.state
-          e.preventDefault()
-          this.props.createDoor(newDoor)
-          this.setState({redirecet:true})
-      }
+    handleSubmit =  async (e) => {
+    e.preventDefault()
+    await this.createDoor()
+    this.setState({redirect:true})
+    }
 
-    
+
     render() {
         if (this.state.redirect) {
-            return <Redirect to="/"/>
+            return <Redirect to="/doors"/>
           }
         return (
             <FormContainer>
@@ -40,20 +49,24 @@ class Form extends Component {
             <form onSubmit={this.handleSubmit}>
             <div>
             <input type="text" 
-            value={this.state.doorName}
-            placeholder="Door Name"
+            onChange={this.handleChange}
+            name="id"
+            value={this.state.newDoor.id}
+            placeholder="Door Id"
             />
             </div>
             <div>
             <input type="text" 
-            value={this.state.doorColor}
-            placeholder="Door Color"
+            onChange={this.handleChange}
+            name="name"
+            value={this.state.newDoor.name}
+            placeholder="Door Name"
             />
             </div>
             <Submit>Sumbit</Submit>
             </form>
             </FormWrapper>
-            <Link  to="/">
+            <Link  to="/doors">
             <Cancel>Cancel</Cancel>
             </Link>     
             </FormContainer>

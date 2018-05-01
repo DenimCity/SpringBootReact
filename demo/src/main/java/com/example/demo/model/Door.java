@@ -3,23 +3,20 @@ import java.util.Objects;
 
 public class Door {
 
-    public String id;
+    public Integer id;
     public String name;
 
-    public Door() {
-        super();
-    }
 
-    public Door(String id, String name) {
+    public Door(Integer id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -53,10 +50,11 @@ public class Door {
                 ", name='" + name + '\'' +
                 '}';
     }
-//
-//    public Door remove(String doorsId) {
-//        return doorsId;
+
+//    public static void deleteDoor(String doorsId) {
+//            return remove(doorsId);
 //    }
+
 
 
 }

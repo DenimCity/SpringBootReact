@@ -50,11 +50,4 @@ public class Door {
                 ", name='" + name + '\'' +
                 '}';
     }
-
-//    public static void deleteDoor(String doorsId) {
-//            return remove(doorsId);
-//    }
-
-
-
 }

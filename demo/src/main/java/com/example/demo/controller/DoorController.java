@@ -43,20 +43,18 @@ public class DoorController {
         return door;
     }
 
-//        @PutMapping("/doors/{doorId}")
-//    public Door updateDoor (@RequestBody Door door, @PathVariable doorId){
-//
-// }
 
     @DeleteMapping("/doors/{doorId}")
     public String deleteDoor(@PathVariable Integer doorId){
         LOGGER.info("Hit the delete  door route: ==> " + doorId.toString());
         doorService.deleteDoor(doorId);
         return "null";
-
     }
-
-
+//working on update
+//        @PutMapping("/doors/{doorId}")
+//    public Door updateDoor (@RequestBody Door door, @PathVariable doorId){
+//
+// }
 
 
 

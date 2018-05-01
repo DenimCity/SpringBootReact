@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import axios from 'axios'
-// import styled from 'styled-components'
+import swal from 'sweetalert'
 
 export default class SingleDoor extends Component {
 
@@ -26,6 +26,17 @@ export default class SingleDoor extends Component {
     this.setState({redirect:true})
         }
 
+    handleClick = async () => {
+        const {name} = this.state.door
+        if(window.confirm(`Are you sure you want to delete: ${name}`)){
+          await swal(`You've deleted ${name}'s info from the database.`)
+           this.deleteDoor()
+        } else {
+            await swal(`You decide not to delete: ${name}'s info`);
+            this.setState({redirect: true})
+        }
+    }
+
     componentWillMount(){
         this.getDoor()
     }
@@ -46,7 +57,7 @@ export default class SingleDoor extends Component {
                 <button> Back </button>
                 </Link>
                 <button
-                onClick={this.deleteDoor}>Delete</button></div>
+                onClick={this.handleClick}>Delete</button></div>
             </div>
         );
     }

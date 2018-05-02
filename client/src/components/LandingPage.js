@@ -41,7 +41,7 @@ export default class LandingPage extends Component {
           </a>
         </Container>
         <ImageWrapper>
-          <img  src="https://contentgrid.homedepot-static.com/hdus/en_US/DTCCOMNEW/fetch/Homepage/Weber-Spirit-II-StainlessSteel-Grill-Exclusive.jpg" alt="picture of grill"/>
+          <img  src="https://contentgrid.homedepot-static.com/hdus/en_US/DTCCOMNEW/fetch/Homepage/Weber-Spirit-II-StainlessSteel-Grill-Exclusive.jpg" alt="grill"/>
         </ImageWrapper>
        </div>
         );

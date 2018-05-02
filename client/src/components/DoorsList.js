@@ -10,8 +10,11 @@ state = {
 }
 
 getDoorData = async () => {
-    const api = `http://localhost:8080/` ;
+    // const api = `http://localhost:8080/` ;
+    const api = `https://firstapp-202814.appspot.com/`
     const response = await axios.get( api )
+    console.log('response status', response.status);
+    console.log('response.data', response.data);
     const doorData = response.data
     this.setState({doors: doorData})
   }
@@ -25,7 +28,9 @@ getDoorData = async () => {
         const doorList = this.state.doors.map((door,i ) => {
             return (
                 <div key={i} id={door.id} > 
-                    <Link to={`/doors/${door.id}`}> {door.name}</Link>
+                    <Link to={`/doors/${door.id}`}> 
+                    <h3>{door.name}</h3>
+                    </Link>
                 </div>
             )
         })
@@ -34,9 +39,9 @@ getDoorData = async () => {
             <Wrapper>
                 <div>
                     <h2>Doors List</h2>
-                    <Link to="/doors/create">
-                <button>Create Door</button></Link>
-                </div>
+                    {/* <Link to="/doors/create">
+                <button>Create Door</button></Link>*/}
+                </div> 
                 <Grid>
                         {doorList}
                 </Grid>

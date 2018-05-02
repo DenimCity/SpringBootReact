@@ -22,7 +22,8 @@ public class DoorController {
 
     @GetMapping("/")
     public List<Door> index(){
-        LOGGER.severe("Error" + (new java.util.Random()).nextFloat());
+        // LOGGER.severe("Error" + (new java.util.Random()).nextFloat());
+        LOGGER.info("Grabbing all doors route");
         List<Door> doorList = doorService.doorInfo();
         return doorList;
     }
@@ -30,7 +31,7 @@ public class DoorController {
 
     @GetMapping("/doors/{doorId}")
     public Door findDoor(@PathVariable Integer doorId){
-        LOGGER.info("Grab door by ID route " + doorId.toString());
+        LOGGER.info("Select one door route: The ID is " + doorId.toString());
         return doorService.findDoor(doorId);
 
     }
@@ -38,7 +39,7 @@ public class DoorController {
 
     @PostMapping("/doors/new")
     public Door createDoor(@RequestBody Door door){
-        LOGGER.info("Hit the create door route " + door.toString());
+        LOGGER.info("Create door route: Information received:" + door.toString());
         doorService.insertDoor(door);
         return door;
     }
@@ -46,7 +47,7 @@ public class DoorController {
 
     @DeleteMapping("/doors/{doorId}")
     public String deleteDoor(@PathVariable Integer doorId){
-        LOGGER.info("Hit the delete  door route: ==> " + doorId.toString());
+        LOGGER.info("Delete route: The ID is" + doorId.toString());
         doorService.deleteDoor(doorId);
         return "null";
     }

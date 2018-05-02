@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Door;
 import com.example.demo.services.DoorService;
+import com.example.demo.services.SpannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +25,10 @@ public class DoorController {
     public List<Door> index(){
         // LOGGER.severe("Error" + (new java.util.Random()).nextFloat());
         LOGGER.info("Grabbing all doors route");
-        List<Door> doorList = doorService.doorInfo();
-        return doorList;
+//        List<Door> doorList = doorService.doorInfo();
+//        return doorList;
+
+        return SpannerService.getAllDoors();
     }
 
 
@@ -40,8 +43,9 @@ public class DoorController {
     @PostMapping("/doors/new")
     public Door createDoor(@RequestBody Door door){
         LOGGER.info("Create door route: Information received:" + door.toString());
-        doorService.insertDoor(door);
-        return door;
+
+//        return door;
+        return SpannerService.insertDoor(door);
     }
 
 

@@ -17,6 +17,12 @@ apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 apply plugin: 'com.google.cloud.tools.appengine'
 
+bootJar {
+    baseName = 'jean-springboot-app'
+    version =  '0.1.0'
+}
+//this is the script to run when you are in the demo folder
+// ./gradlew build && java -jar build/libs/jean-springboot-app-0.1.0.jar
 
 group = 'com.example'
 version = '0.0.1-SNAPSHOT'

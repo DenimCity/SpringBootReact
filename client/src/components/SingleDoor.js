@@ -29,10 +29,10 @@ export default class SingleDoor extends Component {
     handleClick = async () => {
         const {name} = this.state.door
         if(window.confirm(`Are you sure you want to delete: ${name}`)){
-           await swal(`You've deleted ${name}'s info from the database.`)
+            swal(`You've deleted ${name}'s info from the database.`)
            this.deleteDoor()
         } else {
-            await swal(`You decide not to delete: ${name}'s info`);
+          swal(`You decide not to delete: ${name}'s info`);
             this.setState({redirect: true})
         }
     }

@@ -9,3 +9,8 @@ text-align:center;
 font-size: 3.5vh;
 `
 
+export const Loading = styled.div `
+display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+`

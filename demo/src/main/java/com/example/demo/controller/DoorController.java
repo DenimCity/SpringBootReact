@@ -36,19 +36,19 @@ public class DoorController {
     }
 
 
-//    @GetMapping("/doors/{doorId}")
-//    public Door findDoor(@PathVariable Integer doorId){
-//        LOGGER.info("Select one door route: The ID is " + doorId.toString());
-//         //this is referring to static data base in doorSeervice
-////        return doorService.findDoor(doorId);
-//            return  SpannerService.selectDoor(doorId);
-//    }
+    @GetMapping("/doors/{doorId}")
+    public Door findDoor(@PathVariable Integer doorId){
+        LOGGER.info("Select one door route: The ID is " + doorId.toString());
+         //this is referring to static data base in doorSeervice
+//        return doorService.findDoor(doorId);
+            return  spannerService.selectDoor(doorId);
+    }
 //
 //
 //    @PostMapping("/doors/new")
 //    public Door createDoor(@RequestBody Door door){
 //        LOGGER.info("Create door route: Information received:" + door.toString());
-//        return SpannerService.insertDoor(door);
+//        return spannerService.insertDoor(door);
 //    }
 //
 //

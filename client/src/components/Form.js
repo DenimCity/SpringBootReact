@@ -19,10 +19,9 @@ export default class Form extends Component {
     const api = 'http://localhost:8080/doors/new' ; 
     const response = await axios.post( api , this.state.newDoor)
     const newDoor = await response.data 
-    console.log('post data',newDoor);
     const doors = [...this.state.doors]
     doors.push(newDoor)
-    this.setState({doors,redirect:true})
+    this.setState({doors})
         }
 
     handleChange = (e) => {
@@ -33,14 +32,16 @@ export default class Form extends Component {
     this.setState({newDoor})
       }
 
-    handleSubmit =  (e) => {
+    handleSubmit = async (e) => {
     e.preventDefault()
-     this.createDoor()
+     await this.createDoor()
+     this.setState({redirect:true})
     }
 
 
     render() {
-        if (this.state.redirect) {
+        const {redirect, newDoor} = this.state
+        if (redirect) {
             return <Redirect to="/doors"/>
           }
         return (
@@ -52,7 +53,7 @@ export default class Form extends Component {
             <input type="text" 
             onChange={this.handleChange}
             name="id"
-            value={this.state.newDoor.id}
+            value={newDoor.id}
             placeholder="Door Id"
             />
             </div>
@@ -61,7 +62,7 @@ export default class Form extends Component {
             onChange={this.handleChange}
             name="name"
             required
-            value={this.state.newDoor.name}
+            value={newDoor.name}
             placeholder="Door Name"
             />
             </div>

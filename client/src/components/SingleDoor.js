@@ -19,7 +19,6 @@ export default class SingleDoor extends Component {
     getDoor = async (doorId) => {
     const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
     const doorInfo = await response.data
-    console.clear()
     console.log('Data', doorInfo);
     this.setState({door: doorInfo, isLoading: false})
         }

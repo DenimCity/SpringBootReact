@@ -43,21 +43,21 @@ public class DoorController {
 //        return doorService.findDoor(doorId);
             return  spannerService.selectDoor(doorId);
     }
-//
-//
-//    @PostMapping("/doors/new")
-//    public Door createDoor(@RequestBody Door door){
-//        LOGGER.info("Create door route: Information received:" + door.toString());
-//        return spannerService.insertDoor(door);
-//    }
-//
-//
-//    @DeleteMapping("/doors/{doorId}")
-//    public String deleteDoor(@PathVariable Integer doorId){
-//        LOGGER.info("Delete route: The ID is" + doorId.toString());
-//        doorService.deleteDoor(doorId);
-//        return "null";
-//    }
+
+
+    @PostMapping("/doors/new")
+    public Door createDoor(@RequestBody Door door){
+        LOGGER.info("Create door route: Information received:" + door.toString());
+        return spannerService.insertDoor(door);
+    }
+
+
+    @DeleteMapping("/doors/{doorId}")
+    public String deleteDoor(@PathVariable Integer doorId){
+        LOGGER.info("Delete route: The ID is" + doorId.toString());
+        doorService.deleteDoor(doorId);
+        return "null";
+    }
 //working on update
 //        @PutMapping("/doors/{doorId}")
 //    public Door updateDoor (@RequestBody Door door, @PathVariable doorId){

@@ -38,7 +38,7 @@ public class SpannerService {
             return doors;
 
         } catch(Exception e){
-            LOGGER.info("Delete didnt wor," + e);
+            LOGGER.info("Grab all doors didn't work," + e);
             return null;
         }
         // Queries the database
@@ -62,7 +62,7 @@ public class SpannerService {
             return door;
 
         } catch(Exception e){
-            LOGGER.info("Delete didnt wor," + e);
+            LOGGER.info("Insert door didn't work," + e);
             return null;
         }
     }
@@ -79,7 +79,7 @@ public class SpannerService {
             return door;
 
         } catch (Exception e) {
-            LOGGER.info("Delete didnt wor," + e);
+            LOGGER.info("Select door didn't work," + e);
             return null;
         }
 
@@ -87,22 +87,15 @@ public class SpannerService {
 
     }
 
-    public  void deleteDoor(Integer doorId){
-
-
-try {
+    public String deleteDoor(Integer doorId){
+     //deleting from the database
+    try {
     dbSpannerService.getDBConnection().writeAtLeastOnce(Arrays.asList(Mutation.delete("Door", Key.of(doorId))));
-
-} catch (Exception e) {
-    LOGGER.info("Delete didnt wor," + e);
-}
-
-
-//                (Statement.of("DELETE from Door where door_id="+doorId));
-
-
-
+    return "Success";
+    } catch (Exception e) {
+    LOGGER.info("Delete didn't work," + e);
+    return "Error with deleting";
+        }
     }
-
 
 }

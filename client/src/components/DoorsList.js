@@ -2,29 +2,38 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import styled from 'styled-components'
 import { Link} from 'react-router-dom'
-
+import {Loading} from '../components/styledcomponents/basicstyles'
 
 export default class DoorsList extends Component {
 state = {
     doors:[],
+    isLoading:true,
 }
 
 getDoorData = async () => {
     const api = `http://localhost:8080/` ;
     // const api = `https://firstapp-202814.appspot.com/`
     const response = await axios.get( api )
-    console.log('response status', response.status);
-    console.log('response.data', response.data);
+    // console.log('Data', response.data);
     const doorData = response.data
-    this.setState({doors: doorData})
+    this.setState({doors: doorData,isLoading:false})
   }
   
   componentWillMount() {
-    this.getDoorData()
-      
+      setTimeout(() => {
+          this.getDoorData()
+      },1)
   }
   
     render() {
+        const {isLoading} = this.state
+        if(isLoading){
+            return(<Loading>
+                <img
+          src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif"
+          alt=""/>
+            </Loading>)
+        }
         const doorList = this.state.doors.map((door,i ) => {
             return (
                 <div key={i} id={door.id} > 

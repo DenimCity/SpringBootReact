@@ -55,7 +55,8 @@ public class DoorController {
     @DeleteMapping("/doors/{doorId}")
     public String deleteDoor(@PathVariable Integer doorId){
         LOGGER.info("Delete route: The ID is" + doorId.toString());
-        doorService.deleteDoor(doorId);
+//        doorService.deleteDoor(doorId);
+        spannerService.deleteDoor(doorId);
         return "null";
     }
 //working on update

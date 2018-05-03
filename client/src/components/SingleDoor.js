@@ -26,6 +26,7 @@ export default class SingleDoor extends Component {
     
     deleteDoor = async (doorId) => {
     await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
+    this.setState({redirect: true})
         }
 
     handleClick = async () => {

@@ -12,11 +12,18 @@ public class DbSpannerService {
     private static String project = "firstapp-202814", instance = "firstapp", database= "firstapp-db";
 
     public DatabaseClient getDBConnection() {
-        SpannerOptions options = SpannerOptions.newBuilder().build();
-        Spanner spanner = options.getService();
-        DatabaseClient dbClient = spanner.getDatabaseClient(DatabaseId.of(
-                project, instance, database));
+        DatabaseClient dbClient=null;
+        try {
+            SpannerOptions options = SpannerOptions.newBuilder().build();
+            Spanner spanner = options.getService();
+            dbClient = spanner.getDatabaseClient(DatabaseId.of(
+                    project, instance, database));
 
+
+
+        } catch(Exception e ){
+            System.out.println("Error " + e);
+        }
         return dbClient;
     }
 }

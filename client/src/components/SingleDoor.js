@@ -17,14 +17,22 @@ export default class SingleDoor extends Component {
         
 
     getDoor = async (doorId) => {
-    const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
-    const doorInfo = await response.data
-    this.setState({door: doorInfo, isLoading: false})
+        try {
+            const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
+            const doorInfo = await response.data
+            this.setState({door: doorInfo, isLoading: false})
+        } catch (error) {
+            console.log("Error: ", error);
+            }
         }
     
     
     deleteDoor = async (doorId) => {
-   await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
+        try {
+            await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
+        } catch (error) {
+            console.log("Error: ", error);
+            }
         }
 
     handleClick = async () => {

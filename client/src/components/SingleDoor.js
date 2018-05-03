@@ -19,25 +19,25 @@ export default class SingleDoor extends Component {
     getDoor = async (doorId) => {
     const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
     const doorInfo = await response.data
-    console.log('Data', doorInfo);
     this.setState({door: doorInfo, isLoading: false})
         }
     
     
     deleteDoor = async (doorId) => {
-    await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
-    this.setState({redirect: true})
+   await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
         }
 
     handleClick = async () => {
         const {name} = this.state.door
         if(window.confirm(`Are you sure you want to delete: ${name}`)){
-            swal(`You've deleted ${name}'s info from the database.`)
-           this.deleteDoor()
+          swal(`You've deleted ${name}'s info from the database.`)
+           await this.deleteDoor()
+           this.setState({redirect: true})
         } else {
-          swal(`You decide not to delete: ${name}'s info`);
-            this.setState({redirect: true})
+           swal(`You decide not to delete: ${name}'s from database`);
+           this.setState({redirect: true})
         }
+        
     }
 
     componentWillMount(){
@@ -47,16 +47,17 @@ export default class SingleDoor extends Component {
     }
         
     render() {
-        if(this.state.isLoading){
+        const {door,redirect, isLoading} = this.state
+        if(isLoading){
             return (
                 <Loading>
                     <img
           src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif"
-          alt=""/>
+          alt="loading"/>
             </Loading>
             )
         }
-        const {door,redirect} = this.state
+        
         if(redirect){
             return(<Redirect to="/doors"/>)
         }
@@ -64,7 +65,6 @@ export default class SingleDoor extends Component {
             <div>
                 <div>
                 <h4>the current door is: {door.name}</h4>
-                
                 </div>
                 <div>
                 <Link to="/doors"> 

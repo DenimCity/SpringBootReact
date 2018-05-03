@@ -42,8 +42,26 @@ public class SpannerService {
                 project, instance, database));
 
         dbClient.write(mutations);
-
         return door;
     }
+
+    public static Door selectDoor(Integer doorId){
+//        List<Door> doors = new ArrayList<>();
+
+        SpannerOptions options = SpannerOptions.newBuilder().build();
+        Spanner spanner = options.getService();
+        DatabaseClient dbClient = spanner.getDatabaseClient(DatabaseId.of(
+                project, instance, database));
+        // Queries the database
+        Door door = new Door();
+        ResultSet resultSet = dbClient.singleUse().executeQuery(Statement.of("SELECT * from Door where door_id="+doorId));
+        while(resultSet.next()){
+            door.setId((int)resultSet.getLong("door_id"));
+            door.setName(resultSet.getString("door_name"));
+        }
+        return door;
+
+    }
+
 
 }

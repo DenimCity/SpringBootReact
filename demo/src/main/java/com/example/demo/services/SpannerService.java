@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Service
 public class SpannerService {
@@ -24,41 +25,65 @@ public class SpannerService {
         this.dbSpannerService = dbSpannerService;
     }
 
+    Logger LOGGER = Logger.getLogger(SpannerService.class.getName());
+
     public List<Door> getAllDoors(){
         List<Door> doors = new ArrayList<>();
-        // Queries the database
-        ResultSet resultSet = dbSpannerService.getDBConnection().singleUse().executeQuery(Statement.of("SELECT * from door"));
-        while(resultSet.next()){
-            doors.add(new Door( (int) resultSet.getLong("door_id"), resultSet.getString("door_name")));
+
+        try {
+            ResultSet resultSet = dbSpannerService.getDBConnection().singleUse().executeQuery(Statement.of("SELECT * from door"));
+            while(resultSet.next()){
+                doors.add(new Door( (int) resultSet.getLong("door_id"), resultSet.getString("door_name")));
+            }
+            return doors;
+
+        } catch(Exception e){
+            LOGGER.info("Delete didnt wor," + e);
+            return null;
         }
-        return doors;
+        // Queries the database
+
     }
 
     public  Door insertDoor(Door door){
 
         //creating a new door
         List<Mutation> mutations = new ArrayList<>();
-        mutations.add(
-            Mutation.newInsertBuilder("Door")
-            .set("door_id")
-            .to(door.getId())
-            .set("door_name")
-            .to(door.getName())
-            .build());
+        try {
+            mutations.add(
+                    Mutation.newInsertBuilder("Door")
+                            .set("door_id")
+                            .to(door.getId())
+                            .set("door_name")
+                            .to(door.getName())
+                            .build());
 
-        dbSpannerService.getDBConnection().write(mutations);
-        return door;
+            dbSpannerService.getDBConnection().write(mutations);
+            return door;
+
+        } catch(Exception e){
+            LOGGER.info("Delete didnt wor," + e);
+            return null;
+        }
     }
 
     public  Door selectDoor(Integer doorId){
         // Queries the database for one dooor
         Door door = new Door();
-        ResultSet resultSet = dbSpannerService.getDBConnection().singleUse().executeQuery(Statement.of("SELECT * from Door where door_id="+doorId));
-        while(resultSet.next()){
-            door.setId((int)resultSet.getLong("door_id"));
-            door.setName(resultSet.getString("door_name"));
+        try {
+            ResultSet resultSet = dbSpannerService.getDBConnection().singleUse().executeQuery(Statement.of("SELECT * from Door where door_id="+doorId));
+            while(resultSet.next()){
+                door.setId((int)resultSet.getLong("door_id"));
+                door.setName(resultSet.getString("door_name"));
+            }
+            return door;
+
+        } catch (Exception e) {
+            LOGGER.info("Delete didnt wor," + e);
+            return null;
         }
-        return door;
+
+
 
     }
 
@@ -69,7 +94,7 @@ try {
     dbSpannerService.getDBConnection().writeAtLeastOnce(Arrays.asList(Mutation.delete("Door", Key.of(doorId))));
 
 } catch (Exception e) {
-    LOGGER.log("Delete didnt wor," , e);
+    LOGGER.info("Delete didnt wor," + e);
 }
 
 

@@ -23,11 +23,10 @@ public class DoorController {
 
     @GetMapping("/")
     public List<Door> index(){
-        // LOGGER.severe("Error" + (new java.util.Random()).nextFloat());
         LOGGER.info("Grabbing all doors route");
+        //this is referring to static data base in doorSeervice
 //        List<Door> doorList = doorService.doorInfo();
 //        return doorList;
-
         return SpannerService.getAllDoors();
     }
 
@@ -35,16 +34,15 @@ public class DoorController {
     @GetMapping("/doors/{doorId}")
     public Door findDoor(@PathVariable Integer doorId){
         LOGGER.info("Select one door route: The ID is " + doorId.toString());
-        return doorService.findDoor(doorId);
-
+         //this is referring to static data base in doorSeervice
+//        return doorService.findDoor(doorId);
+            return  SpannerService.selectDoor(doorId);
     }
 
 
     @PostMapping("/doors/new")
     public Door createDoor(@RequestBody Door door){
         LOGGER.info("Create door route: Information received:" + door.toString());
-
-//        return door;
         return SpannerService.insertDoor(door);
     }
 

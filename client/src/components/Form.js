@@ -3,7 +3,6 @@ import {Redirect, Link} from 'react-router-dom'
 import styled from 'styled-components'
 import axios from 'axios'
 
-
 export default class Form extends Component {
 
     state = {
@@ -16,12 +15,16 @@ export default class Form extends Component {
     }
     
     createDoor = async () => {
-    const api = 'http://localhost:8080/doors/new' ; 
-    const response = await axios.post( api , this.state.newDoor)
-    const newDoor = await response.data 
-    const doors = [...this.state.doors]
-    doors.push(newDoor)
-    this.setState({doors})
+        const api = 'http://localhost:8080/doors/new' ; 
+        try {
+            const response = await axios.post( api , this.state.newDoor)
+            const newDoor =  await response.data 
+            const doors = [...this.state.doors]
+            doors.push(newDoor)
+            this.setState({doors})
+        } catch (error) {
+            console.log("Error",error);
+        }
         }
 
     handleChange = (e) => {
@@ -33,9 +36,13 @@ export default class Form extends Component {
       }
 
     handleSubmit = async (e) => {
-    e.preventDefault()
-     await this.createDoor()
-     this.setState({redirect:true})
+        e.preventDefault()
+        try {
+            this.createDoor()
+            await this.setState({redirect:true})
+        } catch (error) {
+            console.log('Error: ',error);
+        }
     }
 
 

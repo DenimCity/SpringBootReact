@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import axios from 'axios'
 import swal from 'sweetalert'
+import {Loading} from '../components/styledcomponents/basicstyles'
 
 export default class SingleDoor extends Component {
 
@@ -10,20 +11,22 @@ export default class SingleDoor extends Component {
                 id:"",
                 name:""
             },
-            redirect:false
+            redirect:false,
+            isLoading:true,
         }
         
 
     getDoor = async (doorId) => {
     const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
-    const doorInfo = response.data
-    this.setState({door: doorInfo})
+    const doorInfo = await response.data
+    console.clear()
+    console.log('Data', doorInfo);
+    this.setState({door: doorInfo, isLoading: false})
         }
     
     
     deleteDoor = async (doorId) => {
     await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
-    this.setState({redirect:true})
         }
 
     handleClick = async () => {
@@ -38,10 +41,21 @@ export default class SingleDoor extends Component {
     }
 
     componentWillMount(){
-        this.getDoor()
+        setTimeout(()=> {
+            this.getDoor()
+        },1)
     }
         
     render() {
+        if(this.state.isLoading){
+            return (
+                <Loading>
+                    <img
+          src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif"
+          alt=""/>
+            </Loading>
+            )
+        }
         const {door,redirect} = this.state
         if(redirect){
             return(<Redirect to="/doors"/>)

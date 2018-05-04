@@ -21,11 +21,15 @@ export default class Form extends Component {
         //with standard promises 
         axios.post( api ,  payload )
         .then( response => {
-            if(response.status ===! 200){
-                console.log('Error:,' , response.data.error);
+            const newDoor = response.data 
+            console.log(newDoor);
+            console.log(newDoor.name);
+             if (newDoor.name === null || newDoor.name === undefined) {
+                console.log('Error: ID is already in the database', newDoor.name);
+                window.alert("This ID is already taken ")
+                
+                this.setState({redirect: false })
             } else {
-                const newDoor = response.data 
-                console.log(newDoor);
                 window.alert(`You've create ${newDoor.name}`)
                 this.setState({ redirect: true , newDoor , })
             }

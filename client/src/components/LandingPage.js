@@ -18,14 +18,14 @@ export default class LandingPage extends Component {
     this.setState({ open: false });
   };
    render() {
-     const {open} = this.state
+     const { open } = this.state
         return (
        <div>
           <Container>
-          <h1 className="App-title">{this.state.date.toLocaleTimeString()}</h1>
+          <h1 className="App-title">{ this.state.date.toLocaleTimeString() }</h1>
           </Container>
-          <button onClick={this.onOpenModal}>Welcome </button>
-          <Modal open={open} onClose={this.onCloseModal} little>
+          <button onClick={ this.onOpenModal }>Welcome </button>
+          <Modal open={open} onClose={ this.onCloseModal } little>
           <Title>Welcome To Doors Warehouse</Title>
           <p>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam

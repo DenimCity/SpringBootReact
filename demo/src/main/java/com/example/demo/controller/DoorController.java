@@ -3,6 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Door;
 import com.example.demo.services.DoorService;
+import com.example.demo.services.SpannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,35 +20,43 @@ public class DoorController {
 
     @Autowired
     DoorService doorService;
+    SpannerService spannerService;
+
+    public DoorController(SpannerService spannerService) {
+        this.spannerService = spannerService;
+    }
 
     @GetMapping("/")
     public List<Door> index(){
-        LOGGER.severe("Error" + (new java.util.Random()).nextFloat());
-        List<Door> doorList = doorService.doorInfo();
-        return doorList;
+        LOGGER.info("Grabbing all doors route");
+        //this is referring to static data base in doorSeervice
+//        List<Door> doorList = doorService.doorInfo();
+//        return doorList;
+        return spannerService.getAllDoors();
     }
 
 
     @GetMapping("/doors/{doorId}")
     public Door findDoor(@PathVariable Integer doorId){
-        LOGGER.info("Grab door by ID route " + doorId.toString());
-        return doorService.findDoor(doorId);
-
+        LOGGER.info("Select one door route: The ID is " + doorId.toString());
+         //this is referring to static data base in doorSeervice
+//        return doorService.findDoor(doorId);
+            return  spannerService.selectDoor(doorId);
     }
 
 
     @PostMapping("/doors/new")
     public Door createDoor(@RequestBody Door door){
-        LOGGER.info("Hit the create door route " + door.toString());
-        doorService.insertDoor(door);
-        return door;
+        LOGGER.info("Create door route: Information received:" + door.toString());
+        return spannerService.insertDoor(door);
     }
 
 
     @DeleteMapping("/doors/{doorId}")
     public String deleteDoor(@PathVariable Integer doorId){
-        LOGGER.info("Hit the delete  door route: ==> " + doorId.toString());
-        doorService.deleteDoor(doorId);
+        LOGGER.info("Delete route: The ID is" + doorId.toString());
+//        doorService.deleteDoor(doorId);
+        spannerService.deleteDoor(doorId);
         return "null";
     }
 //working on update

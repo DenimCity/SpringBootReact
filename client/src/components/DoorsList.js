@@ -10,28 +10,31 @@ state = {
     isLoading:true,
 }
 
-getDoorData = async () => {
+getAllDoors = () => {
     // const api = `https://firstapp-202814.appspot.com/`
     const api = `http://localhost:8080/` ;
-    try {
-        const response = await axios.get( api )
-        const doorsData = response.data
-        this.setState({doors:doorsData , isLoading:false})
-    } catch (error) {
-        console.log('error',error);
-    }
+    //with standard .then promises
+    axios.get( api )
+    .then( response => {
+        if(response.status ===! 200){
+            console.log('Error:,' , response.data.error)
+        } else {
+            const doors = response.data
+            this.setState({ doors, isLoading: false })
+        }
+    })
+    //with try catch, if you use try catch add async 
+    // try {
+    //     const response = await axios.get( api )
+    //     const doorsData = response.data
+    //     this.setState({doors:doorsData , isLoading:false})
+    // } catch (error) {
+    //     console.log('error',error);
+    // }
   }
   
   componentWillMount() {
-      try {
-        setTimeout(() => {
-            this.getDoorData()
-        },1)
-
-        this.setState({isLoading:true})
-      } catch (error) {
-          console.log('Error: ',error);
-      }
+    this.getAllDoors()
   }
   
     render() {
@@ -45,9 +48,14 @@ getDoorData = async () => {
         }
         
         return (
+            <div>
+                <a href="doors/create">
+                <button> Create Door</button>
+                </a>
             <Wrapper>
                 <DoorInfo doors={doors}/>
             </Wrapper>
+            </div>
         );
     }
 }

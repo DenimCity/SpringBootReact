@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
+import swal from 'sweetalert'
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -14,17 +15,33 @@ export default class Form extends Component {
         redirect:false
     }
     
-    createDoor = async () => {
+    addDoor = () => {
         const api = 'http://localhost:8080/doors/new' ; 
-        try {
-            const response = await axios.post( api , this.state.newDoor)
-            const newDoor =  await response.data 
-            const doors = [...this.state.doors]
-            doors.push(newDoor)
-            this.setState({doors})
-        } catch (error) {
-            console.log("Error",error);
-        }
+        const payload = this.state.newDoor
+        //with standard promises 
+        axios.post( api ,  payload )
+        .then( response => {
+            if(response.status ===! 200){
+                console.log('Error:,' , response.data.error);
+            } else {
+                const newDoor = response.data 
+                console.log(newDoor);
+                window.alert(`You've create ${newDoor.name}`)
+                
+                this.setState({ redirect: true , newDoor , })
+            }
+        })
+        
+        //try catch, if you use try catch add async 
+        // try {
+        //     const response = await axios.post( api , payload )
+        //     const newDoor =  await response.data 
+        //     const doors = await [...this.state.doors]
+        //     doors.push(newDoor)
+        //     this.setState({doors})
+        // } catch (error) {
+        //     console.log("Error",error);
+        // }
         }
 
     handleChange = (e) => {
@@ -35,14 +52,9 @@ export default class Form extends Component {
     this.setState({newDoor})
       }
 
-    handleSubmit = async (e) => {
+    handleSubmit = (e) => {
         e.preventDefault()
-        try {
-            this.createDoor()
-            await this.setState({redirect:true})
-        } catch (error) {
-            console.log('Error: ',error);
-        }
+        this.addDoor()
     }
 
 
@@ -74,11 +86,10 @@ export default class Form extends Component {
             />
             </div>
             <Submit>Sumbit</Submit>
+            <Link  to="/doors"> <Cancel>Cancel</Cancel> </Link> 
             </form>
             </FormWrapper>
-            <Link  to="/doors">
-            <Cancel>Cancel</Cancel>
-            </Link>     
+                
             </FormContainer>
         );
     }

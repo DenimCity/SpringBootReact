@@ -1,51 +1,47 @@
 import React, {Component} from 'react';
-import { Table, Column, ColumnTitle, Holder} from '../components/styledcomponents/tableStyles'
+
 import { Link} from 'react-router-dom'
+// import { Table } from 'semantic-ui-react'
 
 export default class DoorInfo extends Component {
   
     render(){
         return (
-        
             <div>
                 <h1>Doors List</h1>
-                <Table>
-                    <Column>
-                    <ColumnTitle>Door Name</ColumnTitle>
-                {
-                    this.props.doors.map(door => {
-                         return <Holder> <h4>{door.name}</h4></Holder>
-                    })
-                }
-                </Column>
-                <Column>
-                <ColumnTitle>Door Id</ColumnTitle>
-                {
-                    this.props.doors.map(door => {
-                         return <Holder> <h4>{door.id}</h4>
-                         </Holder>
-                    })
-                }
-                </Column>
-                <Column>
-                <ColumnTitle> Link </ColumnTitle>
-                {
-                    this.props.doors.map(door => {
-                        return (
-                            <Holder>
-                                <Link to={`/doors/${door.id}`}> <h6>Click Me</h6></Link>
-                            </Holder>
-                        )
-                    })
-                }
-                </Column>
-                </Table>
-              
+
+                    <table width="100%">
+                        <tr>
+                            <th>Name </th>
+                            <th>ID</th> 
+                            <th>Link</th>
+                        </tr>
+                        <tr>
+                            <td>
+                            {this.props.doors.map((door, index) => {
+                            return ( <h5 key={index}> {door.name}</h5>  )})} 
+                            </td>
+
+                            <td>
+                            {this.props.doors.map((door, i ) => {
+                            return ( <h5 key={i}> {door.id} </h5>  )})}
+                            </td> 
+
+                            <td>  
+                            {this.props.doors.map((door, i) => {
+                            return ( <h5 key={i}> <a href={`/doors/${door.id}`}> Click Me</a></h5>  )})}
+                            </td>
+                        </tr>
+                                
+                </table>
+                  
             </div>
-        );
-    };
+            
+        )
+    
     }
     
-   
+   }
     
 
+   

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios'
 import {Loading} from '../components/styledcomponents/basicstyles'
 import DoorInfo from './DoorInfo'
+import styled from 'styled-components'
 
 export default class DoorsList extends Component {
 state = {
@@ -26,6 +27,7 @@ getDoorData = async () => {
         setTimeout(() => {
             this.getDoorData()
         },1)
+
         this.setState({isLoading:true})
       } catch (error) {
           console.log('Error: ',error);
@@ -43,10 +45,16 @@ getDoorData = async () => {
         }
         
         return (
-            <div>
+            <Wrapper>
                 <DoorInfo doors={doors}/>
-            </div>
+            </Wrapper>
         );
     }
 }
 
+const Wrapper = styled.div`
+display:flex;
+align-items:center;
+justify-content:center;
+
+`

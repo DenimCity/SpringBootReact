@@ -27,7 +27,6 @@ export default class Form extends Component {
                 const newDoor = response.data 
                 console.log(newDoor);
                 window.alert(`You've create ${newDoor.name}`)
-                
                 this.setState({ redirect: true , newDoor , })
             }
         })

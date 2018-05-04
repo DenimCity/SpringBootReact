@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
 import axios from 'axios'
-import swal from 'sweetalert'
 import {Loading} from '../components/styledcomponents/basicstyles'
+import styled from 'styled-components'
 
 export default class SingleDoor extends Component {
 
@@ -16,46 +16,54 @@ export default class SingleDoor extends Component {
         }
         
 
-    getDoor = async (doorId) => {
-        try {
-            const response = await axios.get(`http://localhost:8080/doors/${this.props.match.params.doorId}`, this.state.door)
-            const doorInfo = await response.data
-            this.setState({door: doorInfo, isLoading: false})
-        } catch (error) {
-            console.log("Error: ", error);
+    getDoor = (doorId) => {
+        const api = `http://localhost:8080/doors`
+        const payload = this.state.door
+        axios.get( `${api}/${this.props.match.params.doorId}`, payload )
+        .then( response => {
+            if(response.status ===! 200){
+                console.log('Error:,' , response.data.error);
+            } else {
+                const door = response.data
+                this.setState({door , isLoading: false })
             }
-        }
-    
-    
-    deleteDoor = async (doorId) => {
-        try {
-            await axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
-        } catch (error) {
-            console.log("Error: ", error);
-            }
-        }
-
-    handleClick = async () => {
-        const {name} = this.state.door
-        if(window.confirm(`Are you sure you want to delete: ${name}`)){
-          swal(`You've deleted ${name}'s info from the database.`)
-           await this.deleteDoor()
-           this.setState({redirect: true})
-        } else {
-           swal(`You decide not to delete: ${name}'s from database`);
-           this.setState({redirect: true})
+                    } )
+                
         }
         
+        //try catch, if you use try catch add async 
+        // try {
+        //     const response = await axios.get(`${api}/${this.props.match.params.doorId}`, payload )
+        //     const doorInfo = await response.data
+        //     this.setState({door: doorInfo, isLoading: false})
+        // } catch (error) {
+        //     console.log("Error: ", error);
+        //     }
+        // }
+    
+    
+    deleteDoor =  (doorId) => {
+        const {name} = this.state.door
+        if(window.confirm(`Are you sure you want to delete: ${name}`)){
+        axios.delete(`http://localhost:8080/doors/${this.props.match.params.doorId}`)
+            this.setState({redirect: true})
+         } else {
+            this.setState({redirect: true})
+         }
+        }
+
+    handleClick = () => {
+        this.deleteDoor()   
     }
 
     componentWillMount(){
-        setTimeout(()=> {
             this.getDoor()
-        },1)
     }
         
     render() {
-        const {door,redirect, isLoading} = this.state
+        const { door,redirect, isLoading } = this.state
+        const { handleClick } = this
+
         if(isLoading){
             return (
                 <Loading>
@@ -70,18 +78,38 @@ export default class SingleDoor extends Component {
             return(<Redirect to="/doors"/>)
         }
         return (
-            <div>
+            <Wrapper>
                 <div>
-                <h4>the current door is: {door.name}</h4>
+                <h4>Selected Door</h4>
+                <h3>{door.name}</h3>
                 </div>
                 <div>
-                <Link to="/doors"> 
-                <button> Back </button>
-                </Link>
-                <button
-                onClick={this.handleClick}>Delete</button></div>
-            </div>
+                <Link to="/doors"> <BackBtn> Back </BackBtn> </Link>
+                <DeleteBtn onClick={handleClick}>Delete</DeleteBtn>
+                </div>
+                <div>
+                </div>
+            </Wrapper>
         );
     }
 }
 
+
+const Wrapper = styled.div`
+justify-content:center;
+display:flex;
+flex-direction: column;
+align-items: center;
+`
+const BackBtn = styled.button`
+color: #FFFFFF;
+background-color: #E66C2D;
+cursor:pointer;
+
+`
+const DeleteBtn = styled.button`
+color: #FFFFFF;
+background-color: red;
+cursor:pointer;
+
+`

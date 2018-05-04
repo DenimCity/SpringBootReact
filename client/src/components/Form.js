@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
+import swal from 'sweetalert'
 import styled from 'styled-components'
 import axios from 'axios'
-
 
 export default class Form extends Component {
 
@@ -15,13 +15,32 @@ export default class Form extends Component {
         redirect:false
     }
     
-    createDoor = async () => {
-    const api = 'http://localhost:8080/doors/new' ; 
-    const response = await axios.post( api , this.state.newDoor)
-    const newDoor =  await response.data 
-    const doors = [...this.state.doors]
-    doors.push(newDoor)
-    this.setState({doors})
+    addDoor = () => {
+        const api = 'http://localhost:8080/doors/new' ; 
+        const payload = this.state.newDoor
+        //with standard promises 
+        axios.post( api ,  payload )
+        .then( response => {
+            if(response.status ===! 200){
+                console.log('Error:,' , response.data.error);
+            } else {
+                const newDoor = response.data 
+                console.log(newDoor);
+                window.alert(`You've create ${newDoor.name}`)
+                this.setState({ redirect: true , newDoor , })
+            }
+        })
+        
+        //try catch, if you use try catch add async 
+        // try {
+        //     const response = await axios.post( api , payload )
+        //     const newDoor =  await response.data 
+        //     const doors = await [...this.state.doors]
+        //     doors.push(newDoor)
+        //     this.setState({doors})
+        // } catch (error) {
+        //     console.log("Error",error);
+        // }
         }
 
     handleChange = (e) => {
@@ -32,15 +51,15 @@ export default class Form extends Component {
     this.setState({newDoor})
       }
 
-    handleSubmit =  async (e) => {
-    e.preventDefault()
-    await this.createDoor()
-    this.setState({redirect:true})
+    handleSubmit = (e) => {
+        e.preventDefault()
+        this.addDoor()
     }
 
 
     render() {
-        if (this.state.redirect) {
+        const {redirect, newDoor} = this.state
+        if (redirect) {
             return <Redirect to="/doors"/>
           }
         return (
@@ -52,7 +71,7 @@ export default class Form extends Component {
             <input type="text" 
             onChange={this.handleChange}
             name="id"
-            value={this.state.newDoor.id}
+            value={newDoor.id}
             placeholder="Door Id"
             />
             </div>
@@ -61,16 +80,15 @@ export default class Form extends Component {
             onChange={this.handleChange}
             name="name"
             required
-            value={this.state.newDoor.name}
+            value={newDoor.name}
             placeholder="Door Name"
             />
             </div>
             <Submit>Sumbit</Submit>
+            <Link  to="/doors"> <Cancel>Cancel</Cancel> </Link> 
             </form>
             </FormWrapper>
-            <Link  to="/doors">
-            <Cancel>Cancel</Cancel>
-            </Link>     
+                
             </FormContainer>
         );
     }

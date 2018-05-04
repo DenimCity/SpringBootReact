@@ -1,56 +1,68 @@
 import React, { Component } from 'react';
 import axios from 'axios'
+import {Loading} from '../components/styledcomponents/basicstyles'
+import DoorInfo from './DoorInfo'
 import styled from 'styled-components'
-import { Link} from 'react-router-dom'
-
 
 export default class DoorsList extends Component {
 state = {
     doors:[],
+    isLoading:true,
 }
 
-getDoorData = async () => {
+getAllDoors = () => {
+    // const api = `https://firstapp-202814.appspot.com/`
     const api = `http://localhost:8080/` ;
-    const response = await axios.get( api )
-    const doorData = response.data
-    this.setState({doors: doorData})
+    //with standard .then promises
+    axios.get( api )
+    .then( response => {
+        if(response.status ===! 200){
+            console.log('Error:,' , response.data.error)
+        } else {
+            const doors = response.data
+            this.setState({ doors, isLoading: false })
+        }
+    })
+    //with try catch, if you use try catch add async 
+    // try {
+    //     const response = await axios.get( api )
+    //     const doorsData = response.data
+    //     this.setState({doors:doorsData , isLoading:false})
+    // } catch (error) {
+    //     console.log('error',error);
+    // }
   }
   
   componentWillMount() {
-    this.getDoorData()
-      
+    this.getAllDoors()
   }
   
     render() {
-        const doorList = this.state.doors.map((door,i ) => {
-            return (
-                <div key={i} id={door.id} > 
-                    <Link to={`/doors/${door.id}`}> {door.name}</Link>
-                </div>
-            )
-        })
-    
+        const {isLoading, doors} = this.state
+        if(isLoading){
+            return(<Loading>
+                <img
+          src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif"
+          alt=""/>
+            </Loading>)
+        }
+        
         return (
+            <div>
+                <a href="doors/create">
+                <button> Create Door</button>
+                </a>
             <Wrapper>
-                <div>
-                    <h2>Doors List</h2>
-                    <Link to="/doors/create">
-                <button>Create Door</button></Link>
-                </div>
-                <Grid>
-                        {doorList}
-                </Grid>
+                <DoorInfo doors={doors}/>
             </Wrapper>
+            </div>
         );
     }
 }
 
-
-const Grid = styled.div`
-display:grid;
-grid-template-columns: 50% 50%;
-`
 const Wrapper = styled.div`
-display:grid;
-grid-template-columns: 30% auto;
+display:flex;
+align-items:center;
+justify-content:center;
+
 `

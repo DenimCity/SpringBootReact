@@ -6,6 +6,7 @@ public class Door {
     public Integer id;
     public String name;
 
+    public Door() {}
 
     public Door(Integer id, String name) {
         this.id = id;

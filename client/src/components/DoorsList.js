@@ -16,8 +16,9 @@ getAllDoors = () => {
     //with standard .then promises
     axios.get( api )
     .then( response => {
-        if(response.status ===! 200){
+        if(response.status ===! 200 ){
             console.log('Error:,' , response.data.error)
+            window.alert('Error:, Server is done!!' , response.data.error)
         } else {
             const doors = response.data
             this.setState({ doors, isLoading: false })

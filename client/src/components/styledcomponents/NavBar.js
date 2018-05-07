@@ -8,7 +8,6 @@ const NavBar = () => {
         <Nav>
             <a href="/">
              <TitleContainer>
-            <Header> HomeDepot</Header>
             </TitleContainer>
             </a>
         </Nav>
@@ -19,11 +18,11 @@ const NavBar = () => {
 
 export default NavBar;
 const Nav = styled.div`
-background-color: #E66C2D ;
-  height: 9vh;
-  padding: 5vw;
-  color: white;
-
+background-image: url(http://www.priyapatel.me/wp-content/uploads/2016/09/Home-Depot-Banner-Image.png);
+background-repeat: round;
+height: 9vh;
+padding: 5vw;
+color: white;
 `
 const TitleContainer = styled.div`
 display:flex;

@@ -43,32 +43,3 @@ export default class DoorInfo extends Component {
     
    }
     
-
-
-
-
-//  const Table = styled.div `
-//    border: 1px black solid;
-// padding: 5px;
-//     display: flex;
-//     color: black;
-//     justify-content: center;
-//     background-color: lightgray;
-//     color: black;
-//     width: 100%;
-    
-// `
-//  const Column = styled.div `
-//     text-align: left;
-// `
-//  const ColumnTitle = styled.div `
-//     padding-bottom: 1.5vh;
-//     padding-right: 1.2vw;
-//     text-align:left;
-    
-// `
-// const LinkWrapper = styled.div`
-// display: flex;
-// flex-wrap: wrap;
-// justify-content: center;
-// ` 

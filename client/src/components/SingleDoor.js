@@ -81,11 +81,11 @@ export default class SingleDoor extends Component {
             <Wrapper>
                 <div>
                 <h4>Selected Door</h4>
-                <h3>{door.name}</h3>
+                <h3>{ door.name }</h3>
                 </div>
                 <div>
                 <Link to="/doors"> <BackBtn> Back </BackBtn> </Link>
-                <DeleteBtn onClick={handleClick}>Delete</DeleteBtn>
+                <DeleteBtn onClick={ handleClick }>Delete</DeleteBtn>
                 </div>
                 <div>
                 </div>

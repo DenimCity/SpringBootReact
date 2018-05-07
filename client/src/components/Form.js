@@ -21,8 +21,8 @@ export default class Form extends Component {
         axios.post( api ,  payload )
         .then( response => {
             const newDoor = response.data 
-            console.log(newDoor);
-            console.log(newDoor.name);
+            // console.log(newDoor);
+            // console.log(newDoor.name);
              if (newDoor.name === null || newDoor.name === undefined) {
                 console.log('Error: ID is already in the database', newDoor.name);
                 window.alert("This ID is already taken ")

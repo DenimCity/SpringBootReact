@@ -38,7 +38,7 @@ getAllDoors = () => {
   }
   
     render() {
-        const { isLoading, doors} = this.state
+        const { isLoading } = this.state
         if( isLoading ){
             return(<Loading>
                 <img
@@ -53,7 +53,7 @@ getAllDoors = () => {
                 <button> Create Door</button>
                 </a>
             <Wrapper>
-                <DoorInfo doors={ doors }/>
+                <DoorInfo doors={ this.state.doors }/>
             </Wrapper>
             </div>
         );

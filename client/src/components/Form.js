@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Redirect, Link} from 'react-router-dom'
-import swal from 'sweetalert'
 import styled from 'styled-components'
 import axios from 'axios'
 
@@ -76,6 +75,7 @@ export default class Form extends Component {
             onChange={this.handleChange}
             name="id"
             value={newDoor.id}
+            required
             placeholder="Door Id"
             />
             </div>

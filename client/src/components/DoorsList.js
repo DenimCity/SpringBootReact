@@ -33,7 +33,7 @@ getAllDoors = () => {
     // }
   }
   
-  componentWillMount() {
+  componentDidMount() {
     this.getAllDoors()
   }
   

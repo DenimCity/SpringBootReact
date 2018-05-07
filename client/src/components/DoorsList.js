@@ -11,13 +11,12 @@ state = {
 }
 
 getAllDoors = () => {
-    // const api = `https://firstapp-202814.appspot.com/`
-    const api = `http://localhost:8080/` ;
+    const api = `http://localhost:8080/` 
     //with standard .then promises
     axios.get( api )
     .then( response => {
         if(response.status ===! 200 ){
-            console.log('Error:,' , response.data.error)
+            console.log('Error:,' , response.data.error  )
             window.alert('Error:, Server is down!!' , response.data.error)
         } else {
             const doors = response.data
@@ -27,10 +26,10 @@ getAllDoors = () => {
     //with try catch, if you use try catch add async 
     // try {
     //     const response = await axios.get( api )
-    //     const doorsData = response.data
-    //     this.setState({doors:doorsData , isLoading:false})
+    //     const doors = response.data
+    //     this.setState({ doors , isLoading:false })
     // } catch (error) {
-    //     console.log('error',error);
+    //     console.log('error',response.data.error + error);
     // }
   }
   
@@ -39,8 +38,8 @@ getAllDoors = () => {
   }
   
     render() {
-        const {isLoading, doors} = this.state
-        if(isLoading){
+        const { isLoading, doors} = this.state
+        if( isLoading ){
             return(<Loading>
                 <img
           src="https://loading.io/spinners/ellipsis/lg.discuss-ellipsis-preloader.gif"
@@ -54,7 +53,7 @@ getAllDoors = () => {
                 <button> Create Door</button>
                 </a>
             <Wrapper>
-                <DoorInfo doors={doors}/>
+                <DoorInfo doors={ doors }/>
             </Wrapper>
             </div>
         );

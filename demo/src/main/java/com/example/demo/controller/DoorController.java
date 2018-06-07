@@ -3,7 +3,7 @@ package com.example.demo.controller;
 
 import com.example.demo.model.Door;
 import com.example.demo.services.DoorService;
-import com.example.demo.services.SpannerService;
+//import com.example.demo.services.SpannerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,19 +20,19 @@ public class DoorController {
 
     @Autowired
     DoorService doorService;
-    SpannerService spannerService;
+    // SpannerService spannerService;
 
-    public DoorController(SpannerService spannerService) {
-        this.spannerService = spannerService;
-    }
+    // public DoorController(SpannerService spannerService) {
+    //     this.spannerService = spannerService;
+    // }
 
     @GetMapping("/")
     public List<Door> index(){
         LOGGER.info("Grabbing all doors route");
-        //this is referring to static data base in doorSeervice
-//        List<Door> doorList = doorService.doorInfo();
-//        return doorList;
-        return spannerService.getAllDoors();
+        // this is referring to static data base in doorSeervice
+       List<Door> doorList = doorService.doorInfo();
+       return doorList;
+        // return spannerService.getAllDoors();
     }
 
 
@@ -40,30 +40,27 @@ public class DoorController {
     public Door findDoor(@PathVariable Integer doorId){
         LOGGER.info("Select one door route: The ID is " + doorId.toString());
          //this is referring to static data base in doorSeervice
-//        return doorService.findDoor(doorId);
-            return  spannerService.selectDoor(doorId);
+       return doorService.findDoor(doorId);
+            // return  spannerService.selectDoor(doorId);
     }
 
 
-    @PostMapping("/doors/new")
-    public Door createDoor(@RequestBody Door door){
-        LOGGER.info("Create door route: Information received:" + door.toString());
-        return spannerService.insertDoor(door);
-    }
+//    @PostMapping("/doors/new")
+//    public Door createDoor(@RequestBody Door door){
+//        LOGGER.info("Create door route: Information received:" + door.toString());
+//        return doorService.insertDoor(door);
+////        return spannerService.insertDoor(door);
+//    }
 
 
     @DeleteMapping("/doors/{doorId}")
     public String deleteDoor(@PathVariable Integer doorId){
         LOGGER.info("Delete route: The ID is" + doorId.toString());
-//        doorService.deleteDoor(doorId);
-        spannerService.deleteDoor(doorId);
+       doorService.deleteDoor(doorId);
+        // spannerService.deleteDoor(doorId);
         return "null";
     }
-//working on update
-//        @PutMapping("/doors/{doorId}")
-//    public Door updateDoor (@RequestBody Door door, @PathVariable doorId){
-//
-// }
+
 
 
 

@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "concurrently": "^3.5.1",
     "cors": "^2.8.4",
     "react": "^16.3.2",
     "react-dom": "^16.3.2",
@@ -16,6 +17,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
+    "dev": "concurrently \" cd ../demo/ && ./gradlew build && java -jar build/libs/jean-springboot-app-0.1.0.jar\" \" npm start \" ",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"

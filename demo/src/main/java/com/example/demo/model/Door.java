@@ -3,9 +3,7 @@ package com.example.demo.model;
 import java.util.Objects;
 
 public class Door {
-//    @Id
-//    @GeneratedValue
-//    private UUID id;
+
 
     public Integer id;
 
@@ -21,9 +19,6 @@ public class Door {
     public Integer getId() {
         return id;
     }
-//    public UUID getId() {
-//        return id;
-//    }
 
     public void setId(Integer id) {
         this.id = id;

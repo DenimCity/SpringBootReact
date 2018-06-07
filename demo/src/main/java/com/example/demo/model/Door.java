@@ -8,6 +8,7 @@ public class Door {
 //    private UUID id;
 
     public Integer id;
+
     public String name;
 
     public Door() {}

@@ -27,8 +27,9 @@ public class DoorService {
         return doors;
     }
 
-    public void insertDoor(Door door) {
+    public Door insertDoor(Door door) {
         doors.add(door);
+        return door;
     }
 
     public Door findDoor(Integer doorId) {

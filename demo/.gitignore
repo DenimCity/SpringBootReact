@@ -25,7 +25,8 @@
 /dist/
 /nbdist/
 /.nb-gradle/
+/gradle
+
 
 -- removing text editor settings --
 .vscode
-.idea

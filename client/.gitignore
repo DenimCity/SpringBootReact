@@ -23,3 +23,5 @@ yarn-error.log*
 -- removing text editor settings --
 .idea
 .vscode
+package-lock.json
+
